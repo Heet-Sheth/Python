@@ -20,4 +20,4 @@ def log_reader(filename):
     print("Read",count,"lines in total")
 
 if __name__ == "__main__":
-    log_reader('sample.log')
+    log_reader('logs/sample.log')

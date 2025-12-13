@@ -12,3 +12,4 @@ with open auto closes a file
 else if is elif
 path/directory works with/out "./"
 post/pre, increment/decrement operators aren't there in python, have to use shorthand
+python paths are calculated from the CWD (current working directory) of the folder open as a context during running and not from the file that you are tring to work with.
