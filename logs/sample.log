@@ -1,5 +1,6 @@
 [INFO] GPU init started
 [INFO] Loading shaders
+[ERROR] Retry failed, aborting
 [WARNING] Shader cache miss
 [ERROR] GPU timeout on queue 3
 [INFO] Retrying operation
