@@ -1,5 +1,5 @@
 def extract_exact_error(errorLine):
-    currentError = errorLine.split(']')[1][1:-1]
+    currentError = errorLine.split(']')[1].strip()
 
     return currentError
 
