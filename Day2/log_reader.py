@@ -16,9 +16,14 @@ def log_reader(filename):
 
                 errors[currentError] = errors.get(currentError, 0)+1
 
-    for key in errors:
-        print(key,':',errors[key])
+    sorted_errors = sorted(errors.items(), key = lambda x:x[1], reverse=True)
 
+    for (error,count) in sorted_errors:
+        print(error,':',count)
+    print("---------------")
+
+    print("Unique errors:",len(errors))
+ 
     print("---------------")
     print(total,"lines read.")
 
