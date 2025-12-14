@@ -17,6 +17,9 @@ def compare_logs(new_run_logfile,baseline_logfile):
     log_new = log_reader(new_run_logfile)
     log_old = log_reader(baseline_logfile)
 
+    new_errors=0
+    solved_errors=0
+
     print("New Errors...")
 
     for key in log_new:
@@ -25,6 +28,7 @@ def compare_logs(new_run_logfile,baseline_logfile):
 
         if current_count>old_count:
             print(key,':',current_count-old_count)
+            new_errors+=(current_count-old_count)
 
     print("Solved Errors...")
 
@@ -34,8 +38,18 @@ def compare_logs(new_run_logfile,baseline_logfile):
 
         if current_count==0:
             print(key,': all')
+            solved_errors+=old_count
         elif current_count<old_count:
             print(key,':',old_count-current_count)
+            solved_errors+=(current_count-old_count)
+
+    print("Final Verdict")
+    if new_errors>solved_errors:
+        print('FAIL')
+    elif solved_errors>new_errors:
+        print('PASS')
+    else:
+        print('NO CHANGE')
 
 
 if __name__ == "__main__":
