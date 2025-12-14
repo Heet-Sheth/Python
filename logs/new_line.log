@@ -1,0 +1,12 @@
+[INFO] GPU init started
+[INFO] Loading shaders
+[WARNING] Shader cache miss
+[ERROR] GPU timeout on queue 3
+[INFO] Retrying operation
+[ERROR] Retry failed, aborting
+[INFO] Retrying operation
+[ERROR] Retry failed, aborting
+[INFO] Fallback path triggered
+[ERROR] Retry failed, aborting
+[WARNING] Performance degradation detected
+[INFO] Shutdown complete

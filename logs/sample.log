@@ -1,8 +1,9 @@
 [INFO] GPU init started
 [INFO] Loading shaders
 [ERROR] Retry failed, aborting
+[ERROR] GPU timeout on queue 3
 [WARNING] Shader cache miss
 [ERROR] GPU timeout on queue 3
+[ERROR] OUT OF BOUND CACHE ACCESS
 [INFO] Retrying operation
-[ERROR] Retry failed, aborting
 [INFO] Shutdown complete
