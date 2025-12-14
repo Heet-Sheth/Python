@@ -1,4 +1,5 @@
 [INFO] GPU init started
+[ERROR] GPU MODEL NOT FOUND
 [INFO] Loading shaders
 [ERROR] Retry failed, aborting
 [ERROR] GPU timeout on queue 3
