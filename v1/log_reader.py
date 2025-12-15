@@ -14,16 +14,17 @@ def log_reader(filename):
     return errors
 
 def compare_logs(new_run_logfile,baseline_logfile):
-    log_new = log_reader(new_run_logfile)   #old or baseline file
-    log_old = log_reader(baseline_logfile)  #new or current file
+    #analysis of baseline vs new run errors
+    log_new = log_reader(new_run_logfile)
+    log_old = log_reader(baseline_logfile)
 
     solved_errors={}
     new_errors={}
-    persistant={}
+    persistent={}
 
     total_new_error=0
     total_solved_error=0
-    total_persistant_error=0
+    total_persistent_error=0    #future use for detailed analysis
 
     for key in log_new:
         new_count = log_new[key]
@@ -33,8 +34,8 @@ def compare_logs(new_run_logfile,baseline_logfile):
             new_errors[key]=new_count-old_count
             total_new_error+=(new_count-old_count)
         elif new_count==old_count:  #errors with frequency same as that in old files
-            persistant[key]=old_count
-            total_persistant_error+=old_count
+            persistent[key]=old_count
+            total_persistent_error+=old_count
 
     for key in log_old: #to check old errors that are not there in new file
         new_count = log_new.get(key,0)
@@ -48,7 +49,7 @@ def compare_logs(new_run_logfile,baseline_logfile):
 
     print("Solved Errors:",solved_errors)
     print("New Errors:",new_errors)
-    print("Not Changed:",persistant)
+    print("Not Changed:",persistent)
 
     print("### - FINAL VERDICT - ###")
 
