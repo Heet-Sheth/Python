@@ -1,0 +1,84 @@
+def extract_error(line):
+    current_error = line.split(']',1)
+    return current_error[1].strip()
+
+def log_reader(filename):
+    lineCount = 0
+    extracted_errors={}
+
+    try:
+        with open(filename,'r') as f:
+            for line in f:
+                lineCount+=1
+
+                if line.startswith('[ERROR]'):
+                    errorString = extract_error(line)
+                    extracted_errors[errorString]=extracted_errors.get(errorString,0)+1
+
+        if lineCount == 0:
+            raise RuntimeError('Empty File.')
+        elif len(extracted_errors) == 0:
+            print('[INFO] No errors found in',filename,'. Have a great day.')
+        
+        return extracted_errors
+    
+    except FileNotFoundError:
+        print("[ERROR] File",filename,'not found.')
+        return {}
+    except RuntimeError:
+        print('[INFO]',filename,'is empty. Nothing to analyze')
+        return {}
+    except Exception as e:
+        print('[ERROR]:',e)
+        return {}
+    
+def analyzer(new_run,base_line_run):
+    errors_file_1 = log_reader(base_line_run)
+    errors_file_2 = log_reader(new_run)
+
+    solved_errors={}
+    new_errors={}
+    persistent_error={}
+
+    solved_errors_count=0
+    new_errors_count=0
+    persistent_error_count=0
+
+    for error_string in errors_file_1:
+        blr_error = errors_file_1[error_string]
+        nr_error = errors_file_2.get(error_string,0)
+
+        if nr_error>blr_error:
+            new_errors[error_string]=nr_error-blr_error
+            new_errors_count+=nr_error-blr_error
+        elif blr_error>nr_error:
+            solved_errors[error_string]=blr_error-nr_error
+            solved_errors_count+=blr_error-nr_error
+        else:
+            persistent_error[error_string]=blr_error
+            persistent_error_count+=blr_error
+
+
+    for error_string in errors_file_2:
+        nr_error=errors_file_2[error_string]
+
+        new_errors[error_string]=nr_error
+        new_errors_count+=nr_error
+
+    print("Comparison Report")
+
+    print("New Error:",new_errors)
+    print("Solved Errors:",solved_errors)
+    print("Status Unchanged:",persistent_error)
+
+    print("FINAL VERDICT")
+
+    if new_errors_count==0:
+        print('PASS')
+    elif solved_errors_count==0:
+        print('NO CHANGE')
+    else:
+        print('FAIL')
+
+if __name__=='__main__':
+    analyzer('./logs/new_line.log','./logs/sample.log')
