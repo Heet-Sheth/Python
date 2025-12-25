@@ -63,24 +63,36 @@ def analyzer(new_run,base_line_run):
 
     for error_string in errors_file_2:
         nr_error=errors_file_2[error_string]
+        blr_error=errors_file_1.get(error_string,0)
 
-        new_errors[error_string]=nr_error
-        new_errors_count+=nr_error
+        if blr_error==0:
+            new_errors[nr_error]=nr_error
+            new_errors_count+=nr_error
 
-    print("Comparison Report")
+    print("\n\nComparison Report")
+    print('-------------------')
 
-    print("New Error:",new_errors)
-    print("Solved Errors:",solved_errors)
-    print("Status Unchanged:",persistent_error)
+    print("\nNew Error:")
+    for key in new_errors:
+        print('\t',key,':',new_errors[key])
 
-    print("FINAL VERDICT")
+    print("\nSolved Errors:")
+    for key in solved_errors:
+        print('\t',key,':',solved_errors[key])
 
-    if new_errors_count==0:
-        print('PASS')
+    print("\nUnchanged Errors:")
+    for key in persistent_error:
+        print('\t',key,':',persistent_error[key])
+
+    print("\n\nFINAL VERDICT")
+    print('---------------')
+
+    if new_errors_count>0:
+        print('FAIL')
     elif solved_errors_count==0:
         print('NO CHANGE')
     else:
-        print('FAIL')
+        print('PASS')
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='Analyze new runs alongside the older benchmark run.')
