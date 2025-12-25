@@ -66,7 +66,7 @@ def analyzer(new_run,base_line_run):
         blr_error=errors_file_1.get(error_string,0)
 
         if blr_error==0:
-            new_errors[nr_error]=nr_error
+            new_errors[error_string]=nr_error
             new_errors_count+=nr_error
 
     print("\n\nComparison Report")
