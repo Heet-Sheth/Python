@@ -1,3 +1,5 @@
+import argparse
+
 def extract_error(line):
     current_error = line.split(']',1)
     return current_error[1].strip()
@@ -81,4 +83,14 @@ def analyzer(new_run,base_line_run):
         print('FAIL')
 
 if __name__=='__main__':
-    analyzer('./logs/new_line.log','./logs/sample.log')
+    parser = argparse.ArgumentParser(description='Analyze new runs alongside the older benchmark run.')
+    
+    parser.add_argument("--baseline",required=True,help='Enter the benchmark run log file with correct path.')
+    parser.add_argument("--newrun",required=True,help='Enter the new run log file with correct path.')
+
+    args = parser.parse_args()
+
+    baseline_run = args.baseline
+    new_run = args.newrun
+
+    analyzer(new_run,baseline_run)
