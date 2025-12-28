@@ -1,0 +1,154 @@
+//running 8 different test scenarios to check the working of my tool and analyzing if somethinghas a logical/run time isssue and can be fixed.
+//run 1 (28/dec/2025), all scenarios passed in 1st trial
+//VERDICT: Robust Tool
+
+heet@Heets-MacBook-Air Day6 % pwd
+/Users/heet/Documents/Python/Day6
+
+heet@Heets-MacBook-Air Day6 % python3 ./log_reader.py --baseline ../logs/test/baseline.log --newrun ../logs/test/newrun.log
+
+
+Comparison Report
+-------------------
+
+New Error:
+
+Solved Errors:
+
+Unchanged Errors:
+         GPU timeout : 2
+         Retry failed : 1
+
+
+FINAL VERDICT
+---------------
+NO CHANGE
+heet@Heets-MacBook-Air Day6 % python3 ./log_reader.py --baseline ../logs/test/baseline.log --newrun ../logs/test/newrun.log
+
+
+Comparison Report
+-------------------
+
+New Error:
+
+Solved Errors:
+         GPU timeout : 1
+         Retry failed : 1
+
+Unchanged Errors:
+
+
+FINAL VERDICT
+---------------
+PASS
+heet@Heets-MacBook-Air Day6 % python3 ./log_reader.py --baseline ../logs/test/baseline.log --newrun ../logs/test/newrun.log
+
+
+Comparison Report
+-------------------
+
+New Error:
+         GPU hang : 2
+
+Solved Errors:
+
+Unchanged Errors:
+         Memory stall : 1
+
+
+FINAL VERDICT
+---------------
+FAIL
+heet@Heets-MacBook-Air Day6 % python3 ./log_reader.py --baseline ../logs/test/baseline.log --newrun ../logs/test/newrun.log
+[INFO] No errors found in ../logs/test/baseline.log . Have a great day.
+
+
+Comparison Report
+-------------------
+
+New Error:
+         GPU crash : 3
+
+Solved Errors:
+
+Unchanged Errors:
+
+
+FINAL VERDICT
+---------------
+FAIL
+heet@Heets-MacBook-Air Day6 % python3 ./log_reader.py --baseline ../logs/test/baseline.log --newrun ../logs/test/newrun.log
+
+
+Comparison Report
+-------------------
+
+New Error:
+         New allocator fault : 1
+
+Solved Errors:
+         Timeout : 1
+         Regression : 1
+
+Unchanged Errors:
+
+
+FINAL VERDICT
+---------------
+FAIL
+heet@Heets-MacBook-Air Day6 % python3 ./log_reader.py --baseline ../logs/test/baseline.log --newrun ../logs/test/newrun.log
+[INFO] No errors found in ../logs/test/newrun.log . Have a great day.
+
+
+Comparison Report
+-------------------
+
+New Error:
+
+Solved Errors:
+         X : 1
+         Y : 1
+
+Unchanged Errors:
+
+
+FINAL VERDICT
+---------------
+PASS
+heet@Heets-MacBook-Air Day6 % python3 ./log_reader.py --baseline ../logs/test/baseline.log --newrun ../logs/test/newrun.log
+[INFO] No errors found in ../logs/test/baseline.log . Have a great day.
+[INFO] No errors found in ../logs/test/newrun.log . Have a great day.
+
+
+Comparison Report
+-------------------
+
+New Error:
+
+Solved Errors:
+
+Unchanged Errors:
+
+
+FINAL VERDICT
+---------------
+NO CHANGE
+heet@Heets-MacBook-Air Day6 % python3 ./log_reader.py --baseline ../logs/test/baseline.log --newrun ../logs/test/newrun.log
+
+
+Comparison Report
+-------------------
+
+New Error:
+         GPU fault code 19 : 1
+
+Solved Errors:
+         GPU fault code 18 : 1
+
+Unchanged Errors:
+
+
+FINAL VERDICT
+---------------
+FAIL
+heet@Heets-MacBook-Air Day6 % 
