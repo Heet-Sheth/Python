@@ -1,18 +1,97 @@
-I keep forgetting that python has no semicolons
-I keep forgetting that python scope works via : and indentation no Curly braces
-Upper range is exclusive in python
-Lower range is optional and inclusive
+# GPU Log Regression Analyzer
 
-"+" can concatenate strings only
-, can do int and strings
-, attaches 1 space for itself, so do not explicitely add for formatting
+## Description
 
-line is an inbuit string itarator containing a line in each iteration
-with open auto closes a file
-else if is elif
-path/directory works with/out "./"
-post/pre, increment/decrement operators aren't there in python, have to use shorthand
-python paths are calculated from the CWD (current working directory) of the folder open as a context during running and not from the file that you are tring to work with.
-the new line characters are there in the string if read as lines of a file
-Strip is a smarter way to handle leading and trailing spaces.
-python comments start with # instead of // (single line)
+A lightweight Python utility to compare GPU validation logs across
+baseline and new simulation runs. It identifies new failures, solved
+errors, and persistent issues, and produces a structured regression
+summary for validation engineers.
+
+## Why
+
+- manual log comparison is slow & error-prone
+
+- engineers need quick regression triage
+
+- this helps decide PASS / FAIL faster
+
+## Features
+
+- Counts frequency of each unique error string
+
+- Detects:
+
+  - New errors
+
+  - Solved errors
+
+  - Persistent errors
+
+- Handles empty files safely
+
+- Provides deterministic PASS / FAIL policy
+
+- CLI interface using argparse
+
+## How to run
+
+```Terminal/CMD
+python3 /v1.0.1/log_reader.py --baseline baseline.log --newrun newrun.log
+```
+
+## Sample Output
+
+```Python
+Comparison Report
+-------------------
+
+New Error:
+         New allocator fault : 1
+
+Solved Errors:
+         Timeout : 1
+         Regression : 1
+
+Unchanged Errors:
+
+
+FINAL VERDICT
+---------------
+FAIL
+```
+
+## Important Assumption
+
+- Logs follow [ERROR] message format.
+- Comprison is String based.
+- DIfferent Error codes -> Treated as different errors.
+- Tool does NOT normalize / cluster messages.
+
+## Versioning
+
+```makefile
+Version: v1.0.1
+Status: Stable (Validated across 8 scenarios)
+```
+
+## Roadmap
+
+- optional CSV / JSON output
+
+- logging class for better formatting
+
+- config-based policy tuning
+
+- support warning-level analysis
+
+## Design
+
+## Design Philosophy
+
+This tool is intentionally designed as a **lightweight and deterministic regression-analysis utility** — not an automated testing framework or log-mining engine. The focus is on correctness, clarity, and reliability over complexity or optimization.
+
+The comparison model is **string-exact and frequency-based** by design. Error messages are treated as distinct logical identifiers without normalization or clustering, ensuring predictable, transparent behavior during validation workflows. All outcomes are deterministic and reproducible — no heuristics, inference, or hidden interpretation layers are used.
+
+Edge-case handling prioritizes **safety and failure-awareness**. Empty files, logs with no errors, and clean baseline runs are handled explicitly rather than silently ignored, ensuring that regression verdicts remain meaningful and auditable.
+
+Overall, the tool aims to support **fast triage and engineering judgment**, providing a clear separation of new, solved, and persistent failures — while keeping policy behavior explicit, explainable, and easy to reason about.
