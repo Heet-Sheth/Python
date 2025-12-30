@@ -7,7 +7,7 @@ baseline and new simulation runs. It identifies new failures, solved
 errors, and persistent issues, and produces a structured regression
 summary for validation engineers.
 
-## Why
+## Why This Tool Exists
 
 - manual log comparison is slow & error-prone
 
@@ -36,8 +36,17 @@ summary for validation engineers.
 ## How to run
 
 ```Terminal/CMD
-python3 /v1.0.1/log_reader.py --baseline baseline.log --newrun newrun.log
+python3 ./v1.0.1/log_reader.py --baseline baseline.log --newrun newrun.log
 ```
+
+## PASS / FAIL Policy
+
+The regression verdict is determined using the following rules:
+
+- New errors introduced in the new run → **FAIL**
+- Errors that disappear or reduce in count → **SOLVED**
+- Errors that appear in both runs with the same frequency → **PERSISTENT**
+- No change in error behavior → **NO CHANGE**
 
 ## Sample Output
 
@@ -60,12 +69,12 @@ FINAL VERDICT
 FAIL
 ```
 
-## Important Assumption
+## Input Assumptions
 
-- Logs follow [ERROR] message format.
-- Comprison is String based.
-- DIfferent Error codes -> Treated as different errors.
-- Tool does NOT normalize / cluster messages.
+- Logs follow the `[ERROR] message` format
+- Comparison is strictly string-based
+- Different error codes are treated as distinct error signatures
+- The tool does not normalize, tokenize, or cluster messages
 
 ## Versioning
 
@@ -73,6 +82,19 @@ FAIL
 Version: v1.0.1
 Status: Stable (Validated across 8 scenarios)
 ```
+
+## Validation Coverage
+
+The tool has been tested across the following scenarios:
+
+- No-change runs
+- Solved-only cases
+- New-error introduction
+- Clean baseline → new failures
+- Mixed solved + new failures
+- Empty new-run logs
+- Logs with no errors
+- Similar error strings treated as distinct entries
 
 ## Roadmap
 
@@ -83,8 +105,6 @@ Status: Stable (Validated across 8 scenarios)
 - config-based policy tuning
 
 - support warning-level analysis
-
-## Design
 
 ## Design Philosophy
 
