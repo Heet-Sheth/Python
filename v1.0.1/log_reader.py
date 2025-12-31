@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 def extract_error(line):
     current_error = line.split(']',1)
@@ -34,7 +35,7 @@ def log_reader(filename):
         print('[ERROR]:',e)
         return {}
     
-def analyzer(new_run,base_line_run):
+def analyzer(new_run,base_line_run,summary_only_mode):
     errors_file_1 = log_reader(base_line_run)
     errors_file_2 = log_reader(new_run)
 
@@ -69,40 +70,56 @@ def analyzer(new_run,base_line_run):
             new_errors[error_string]=nr_error
             new_errors_count+=nr_error
 
-    print("\n\nComparison Report")
-    print('-------------------')
+    if not summary_only_mode:
+        print("================== Regression Comparison ===================")
+        print("Baseline File:",base_line_run)
+        print("New Run File:",new_run)
 
-    print("\nNew Error:")
-    for key in new_errors:
-        print('\t',key,':',new_errors[key])
+        print("\n[New Errors]")
+        if new_errors:
+            for key in new_errors:
+                print('\t',key,':',new_errors[key])
+        else:
+            print('\t(none)')
 
-    print("\nSolved Errors:")
-    for key in solved_errors:
-        print('\t',key,':',solved_errors[key])
+        print("\n[Solved Errors]")
+        if solved_errors:
+            for key in solved_errors:
+                print('\t',key,':',solved_errors[key])
+        else:
+            print('\t(none)')
 
-    print("\nUnchanged Errors:")
-    for key in persistent_error:
-        print('\t',key,':',persistent_error[key])
+        print("\n[Unchanged Errors]")
+        if persistent_error:
+            for key in persistent_error:
+                print('\t',key,':',persistent_error[key])
+        else:
+            print('\t(none)')
 
-    print("\n\nFINAL VERDICT")
-    print('---------------')
+    print("\n\n------------- FINAL VERDICT ---------------")
 
     if new_errors_count>0:
-        print('FAIL')
+        print('Result : FAIL')
+        return 1
     elif solved_errors_count==0:
-        print('NO CHANGE')
+        print('Result : NO CHANGE')
+        return 2
     else:
-        print('PASS')
+        print('Result : PASS')
+        return 0
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='Analyze new runs alongside the older benchmark run.')
     
     parser.add_argument("--baseline",required=True,help='Enter the benchmark run log file with correct path.')
     parser.add_argument("--newrun",required=True,help='Enter the new run log file with correct path.')
+    parser.add_argument("--summary",action='store_true',help='Show only final verdict.')
 
     args = parser.parse_args()
 
     baseline_run = args.baseline
     new_run = args.newrun
+    summary_only = args.summary
 
-    analyzer(new_run,baseline_run)
+    exit_code = analyzer(new_run,baseline_run,summary_only)
+    sys.exit(exit_code)
