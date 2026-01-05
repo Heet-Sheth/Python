@@ -7,7 +7,7 @@ baseline and new simulation runs. It identifies new failures, solved
 errors, and persistent issues, and produces a structured regression
 summary for validation engineers.
 
-## Why This Tool Exists
+## Why
 
 - manual log comparison is slow & error-prone
 
@@ -75,7 +75,7 @@ By default, the tool prints a full comparison report.
 To print only the final verdict and exit code:
 
 ```Terminal/CMD
-  --summary
+  python3 ./v1.0.1/log_reader.py --baseline baseline.log --newrun newrun.log --summary
 ```
 
 ## Exit Status Codes
@@ -92,13 +92,13 @@ The tool returns deterministic process exit codes to support CI pipelines and au
 
 This project includes a demo runner that executes three validation scenarios — FAIL, PASS, and NO CHANGE — using prepared log files.
 
-### On Linux / macOS
+### On Linux / macOS (Terminal)
 
 ```Terminal/CMD
 ./DEMO/demo.sh
 ```
 
-### On Windows (Untested)
+### On Windows (CMD)
 
 ```Terminal/CMD
 cd DEMO
