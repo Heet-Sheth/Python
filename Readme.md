@@ -69,6 +69,42 @@ FINAL VERDICT
 FAIL
 ```
 
+## Summary-Only Mode
+
+By default, the tool prints a full comparison report.
+To print only the final verdict and exit code:
+
+```Terminal/CMD
+  --summary
+```
+
+## Exit Status Codes
+
+The tool returns deterministic process exit codes to support CI pipelines and automated triage:
+
+| Verdict   | Meaning                     | Exit Code |
+| --------- | --------------------------- | :-------: |
+| PASS      | Only solved errors detected |     0     |
+| FAIL      | New errors introduced       |     1     |
+| NO CHANGE | Error behaviour unchanged   |     2     |
+
+## Demo (Run Pre-Configured Test Scenarios)
+
+This project includes a demo runner that executes three validation scenarios — FAIL, PASS, and NO CHANGE — using prepared log files.
+
+### On Linux / macOS
+
+```Terminal/CMD
+./DEMO/demo.sh
+```
+
+### On Windows (Untested)
+
+```Terminal/CMD
+cd DEMO
+demo.bat
+```
+
 ## Input Assumptions
 
 - Logs follow the `[ERROR] message` format
