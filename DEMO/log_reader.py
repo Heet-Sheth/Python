@@ -2,8 +2,8 @@ import argparse
 import sys
 
 def extract_error(line):
-    current_error = line.split(']',1)
-    return current_error[1].strip()
+    extracted_error = line.split(']',1)
+    return extracted_error[1].strip()
 
 def log_reader(filename):
     lineCount = 0
@@ -14,12 +14,14 @@ def log_reader(filename):
             for line in f:
                 lineCount+=1
 
+                # fixed error format ensures reliability and predictibility for the starting phase of the tool.
+
                 if line.startswith('[ERROR]'):
                     errorString = extract_error(line)
                     extracted_errors[errorString]=extracted_errors.get(errorString,0)+1
 
         if lineCount == 0:
-            raise RuntimeError('Empty File.')
+            raise extract_error('Empty File.')
         elif len(extracted_errors) == 0:
             print('[INFO] No errors found in',filename,'. Have a great day.')
         
@@ -28,7 +30,7 @@ def log_reader(filename):
     except FileNotFoundError:
         print("[ERROR] File",filename,'not found.')
         return {}
-    except RuntimeError:
+    except extract_error:
         print('[INFO]',filename,'is empty. Nothing to analyze')
         return {}
     except Exception as e:
