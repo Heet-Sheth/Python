@@ -34,6 +34,11 @@ def log_reader(filename):
     except Exception as e:
         print('[ERROR]:',e)
         return {}
+
+# If any new error pops-up which was not there with the baseline run, the current comparision will be marked as failed.
+# If there are no new errors, but also none of the errors are marked solved, then no change will be the result.
+# If atleast 1 error is solved, and no new errors are being introduced, then only pass will be forwarded.
+# We know that effort matters more than results, but as the errors keep being solved will eventually result in a finished product that meets expectations, so this tough verdicts.
     
 def analyzer(new_run,base_line_run,summary_only_mode):
     errors_file_1 = log_reader(base_line_run)
